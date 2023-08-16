@@ -12,7 +12,7 @@
     "lib/*"
   ],
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "postcss": "^8.0"
   },
   "devDependencies": {
