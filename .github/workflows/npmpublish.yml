@@ -29,13 +29,20 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # キャッシュ機構なくてワロタ
-      # TODO: feature増えたらちゃんとやる
-      - name: build and publish
-        if: steps.can.outputs.result == 'true'
+      - name: npm install
         run: |
           set -eu
           npm install
+      - name: test
+        run: |
+          set -eu
+          npm run test
+      # キャッシュ機構なくてワロタ
+      # TODO: feature増えたらちゃんとやる
+      - name: publish
+        if: steps.can.outputs.result == 'true'
+        run: |
+          set -eu
           echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
           npm publish
         env:
