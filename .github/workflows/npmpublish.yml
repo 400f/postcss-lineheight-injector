@@ -39,5 +39,4 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
           npm publish
         env:
-          # actionsで作られる GITHUB_TOKEN でpublishすると500が返ってくるので暫定
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
