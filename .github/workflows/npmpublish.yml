@@ -1,0 +1,44 @@
+name: publish npm package
+
+on:
+  push:
+    paths:
+      - 'package.json'
+    branches:
+      - master
+
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+          scope: '@400f'
+      - name: can npm publish
+        id: can
+        run: |
+          set -eu
+          npm i -g can-npm-publish
+          if can-npm-publish; then
+            echo "##[set-output name=result;]true"
+          else
+            echo "##[set-output name=result;]false"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # キャッシュ機構なくてワロタ
+      # TODO: feature増えたらちゃんとやる
+      - name: build and publish
+        if: steps.can.outputs.result == 'true'
+        run: |
+          set -eu
+          yarn install
+          yarn run build
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+          npm publish
+        env:
+          # actionsで作られる GITHUB_TOKEN でpublishすると500が返ってくるので暫定
+          NODE_AUTH_TOKEN: ${{ secrets.PRIVATE_REPO_GITHUB_TOKEN }}
