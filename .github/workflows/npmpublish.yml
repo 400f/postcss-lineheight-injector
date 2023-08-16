@@ -3,9 +3,9 @@ name: publish npm package
 on:
   push:
     paths:
-      - 'package.json'
+      - "package.json"
     branches:
-      - master
+      - main
 
 jobs:
   publish-gpr:
@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-          scope: '@400f'
+          scope: "@400f"
       - name: can npm publish
         id: can
         run: |
