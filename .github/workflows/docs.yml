@@ -1,0 +1,32 @@
+name: publish docs
+
+on:
+  push:
+    paths:
+      - docs/**
+    branches:
+      - master
+
+jobs:
+  publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+          path: master
+      - uses: actions/checkout@v3
+        with:
+          ref: docs
+          path: docs
+      - name: update docs branch
+        run: |
+          cp master/docs/*_logs.md docs
+          cd ./docs
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git add .
+          git commit -m "updated in ${GITHUB_SHA}"
+          git push origin docs
