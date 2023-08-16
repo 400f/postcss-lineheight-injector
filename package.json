@@ -1,8 +1,9 @@
 {
   "name": "@400f/postcss-lineheight-injector",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "main": "libs/index.js",
   "scripts": {
+    "build": "run-p build:**",
     "test": "jest"
   },
   "publishConfig": {
