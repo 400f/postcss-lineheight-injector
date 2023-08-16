@@ -1,0 +1,21 @@
+name: Setting assignee and reviewers
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  assign:
+    name: Set assignees and reviewers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set assignees
+        uses: 400f/action-assign-pr-author@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
+      - name: Set reviewers
+        uses: 400f/action-assign-reviewers@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
+          REVIEWERS: ''
+          TEAM_REVIEWERS: 'employee-eng'
