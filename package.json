@@ -2,15 +2,15 @@
   "name": "@400f/postcss-lineheight-injector",
   "version": "0.1.0",
   "main": "libs/index.js",
+  "repository": "https://github.com/400f/postcss-lineheight-injector.git",
   "scripts": {
-    "build": "run-p build:**",
     "test": "jest"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "files": [
-    "lib/*"
+    "libs/*"
   ],
   "license": "MIT",
   "peerDependencies": {
