@@ -1,6 +1,4 @@
-const postcss = require('postcss');
-
-module.exports = (userOptions = {}) => {
+const plugin = (userOptions = {}) => {
   const defaultOptions = {
     rules: {
       // like '10px': '16px',
@@ -16,8 +14,8 @@ module.exports = (userOptions = {}) => {
 
   return {
     postcssPlugin: 'postcss-lineheight-injector',
-    Once (root, { result }) {
-      root.walkDecls('font-size', (decl) => {
+    Declaration: {
+      'font-size': (decl) => {
         let declaratedlineHeight;
         decl.parent.walkDecls('line-height', (decl) => {
           declaratedlineHeight = decl.value;
@@ -25,9 +23,12 @@ module.exports = (userOptions = {}) => {
 
         if (declaratedlineHeight !== undefined) return;
         decl.before(
-          `line-height: ${options.rules[decl.value] || options.fallbackValue}`
+          `line-height: ${options.rules[decl.value] || options.fallbackValue}`,
         );
-      });
-    }
-  }
-}
+      },
+    },
+  };
+};
+plugin.postcss = true;
+
+module.exports = plugin;
