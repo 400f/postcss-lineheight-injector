@@ -6,6 +6,7 @@ on:
 
 jobs:
   assign:
+    timeout-minutes: 15
     name: Set assignees and reviewers
     runs-on: ubuntu-latest
     steps:
